@@ -555,7 +555,7 @@ ${encodeArray(spec.end.compile().toArray({}, none))}, ${spec.placeholder.id}]`
     return {
       parser: head + (mod == "cjs" ? `exports.${exportName} = ${parserStr}\n` : `export const ${exportName} = ${parserStr}\n`),
       terms: mod == "cjs" ? `${gen}module.exports = {\n  ${terms.join(",\n  ")}\n}`
-        : `${gen}export const\n  ${terms.join(",\n  ")}\n`
+        : `${gen}export const enum Term {\n  ${terms.join(",\n  ")},\n}\n`
     }
   }
 
