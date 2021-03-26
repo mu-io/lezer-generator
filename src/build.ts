@@ -549,13 +549,15 @@ ${encodeArray(spec.end.compile().toArray({}, none))}, ${spec.placeholder.id}]`
       }
       terms.push(`${id}${mod == "cjs" ? ":" : " ="} ${this.termTable[name]}`)
     }
+
+    let dialectTerms: string[] = [];
     for (let id = 0; id < this.dialects.length; id++)
-      terms.push(`Dialect_${this.dialects[id]}${mod == "cjs" ? ":" : " ="} ${id}`)
+      dialectTerms.push(`${this.dialects[id]}${mod == "cjs" ? ":" : " ="} ${id}`)
 
     return {
       parser: head + (mod == "cjs" ? `exports.${exportName} = ${parserStr}\n` : `export const ${exportName} = ${parserStr}\n`),
       terms: mod == "cjs" ? `${gen}module.exports = {\n  ${terms.join(",\n  ")}\n}`
-        : `${gen}export const enum Term {\n  ${terms.join(",\n  ")},\n}\n`
+        : `${gen}export const enum Term {\n  ${terms.join(",\n  ")},\n}\n\nexport const enum Dialect {\n  ${dialectTerms.join(",\n  ")},\n}\n`
     }
   }
 
